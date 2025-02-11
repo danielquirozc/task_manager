@@ -18,7 +18,7 @@ export async function createTag({ title }: {
         }
       }
     })
-  } catch (err) {
+  } catch {
     throw new Error("Failed to create tag")
   }
 }

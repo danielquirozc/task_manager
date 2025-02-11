@@ -14,7 +14,7 @@ export async function deleteTask(taskID: number) {
         id: taskID
       }
     })
-  } catch (error) {
+  } catch {
     throw new Error("Failed to delete task")
   }
   revalidatePath(`/`)

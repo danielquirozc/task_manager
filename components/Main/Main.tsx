@@ -1,4 +1,4 @@
-import { BookMarked, ChartPie } from "lucide-react";
+import { ChartPie } from "lucide-react";
 import React from "react";
 import Footer from "./Footer";
 

@@ -19,8 +19,8 @@ export async function changeStatus({ id, newStatus }: UpdateTaskProps) {
         status: newStatus
       }
     })
-  } catch (error) {
-
+  } catch {
+    throw new Error("Failed to update task status")
   }
   revalidatePath(`/`);
 }
