@@ -6,12 +6,12 @@ import TagPicker from "./TagPicker";
 import { useState } from "react";
 import { tags } from "@prisma/client";
 
-export default function CreateTask({ groupID, tags = [] }: { 
+export default function CreateTask({ groupID }: { 
   groupID: number,
-  tags: tags[]
 }) {
-  const [selectedTags, setSelectedTags] = useState<tags[]>(tags);
+  const [selectedTags, setSelectedTags] = useState<tags[]>([]);
 
+  
   const handleTagChange = (tag : tags) => {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
