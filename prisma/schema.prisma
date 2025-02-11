@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model groups {
+  id       Int     @id @default(autoincrement())
+  title    String  @db.VarChar(25)
+  owner_id String  @db.Uuid
+  users    users   @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tasks    tasks[]
+}
+
+model tags {
+  id          Int           @id @default(autoincrement())
+  title       String        @db.VarChar(30)
+  owner_id    String        @db.Uuid
+  users       users         @relation(fields: [owner_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  tagsOnTasks tagsOnTasks[]
+}
+
+model tasks {
+  id          Int           @id @default(autoincrement())
+  title       String        @db.VarChar(35)
+  description String        @db.VarChar(255)
+  group_id    Int
+  status      String        @db.VarChar(10)
+  tagsOnTasks tagsOnTasks[]
+  groups      groups        @relation(fields: [group_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username String   @db.VarChar(20)
+  email    String?  @db.VarChar
+  password String
+  groups   groups[]
+  tags     tags[]
+}
+
+model tagsOnTasks {
+  id      Int   @id(map: "tasks_tags_pkey") @default(autoincrement())
+  task_id Int
+  tag_id  Int
+  tags    tags  @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_tags_tag_id_fkey")
+  tasks   tasks @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_tags_task_id_fkey")
+}
