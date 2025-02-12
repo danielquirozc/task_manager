@@ -29,10 +29,11 @@ export async function POST(request: Request) {
 
   const cookie = await cookies();
   cookie.set("token", token, {
+    path: "/",
     httpOnly: true,
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
   });
   return new Response(JSON.stringify({ message: "Login successful" }), { status: 200 });
 }
