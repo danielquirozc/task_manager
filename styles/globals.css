@@ -7,7 +7,7 @@
 }
 
 .btn-soft {
-  @apply bg-gradient-to-t from-slate-300 to-slate-100 w-full border border-gray-400 font-semibold text-slate-700 py-2 rounded-lg
+  @apply bg-black w-full border font-semibold text-slate-100 font-geist py-2 rounded-lg
 }
 
 .loading-gradient {

@@ -3,7 +3,7 @@ import { createHmac } from 'crypto';
 import { SignJWT } from 'jose'
 import { cookies } from 'next/headers';
 
-export async function POST(request: Request) {
+export async function POST(request: Request) {  
   const { username, password } = await request.json();
   const user = await prisma.users.findFirst({
     where: {
