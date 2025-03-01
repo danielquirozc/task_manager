@@ -1,25 +1,25 @@
-import { TaskStatus } from "@/types/taskStatus";
 import { orderByStatus } from "@/utils/orderByStatus";
-import { tasks } from "@prisma/client";
+import { tasks, taskstatus } from "@prisma/client";
 import { useState } from "react";
 import { changeStatus } from "../actions/changeStatus";
+import { TaskWithTags } from "@/components/Kanban/Kanban";
 
 type Props = {
-  listOfTask: tasks[]
+  taskCollection: TaskWithTags[]
 }
 
-type updateTaskStatusProps = { taskID: number, newStatus: TaskStatus, oldStatus: TaskStatus }
+type updateTaskStatusProps = { taskID: number, newStatus: taskstatus, oldStatus: taskstatus }
 
 type GroupedTasks = {
-  [TaskStatus.DO]: tasks[]
-  [TaskStatus.PENDING]: tasks[]
-  [TaskStatus.DONE]: tasks[]
+  [taskstatus.Do]: TaskWithTags[]
+  [taskstatus.Pending]: TaskWithTags[]
+  [taskstatus.Done]: TaskWithTags[]
 }
 
-export function useKanban({ listOfTask }: Props) {
-  const [tasks, setTasks] = useState<GroupedTasks>(orderByStatus(listOfTask))
+export function useKanban({ taskCollection }: Props) {
+  const [tasks, setTasks] = useState<GroupedTasks>(orderByStatus(taskCollection));
 
-  const updateTaskStatus = async ({ taskID, newStatus, oldStatus }: updateTaskStatusProps) => {
+  const moveTask = async ({ taskID, newStatus, oldStatus }: updateTaskStatusProps) => {
     const clonedTasks = structuredClone(tasks);
     const taskToUpdate = clonedTasks[oldStatus].find((task) => task.id === taskID);
     if (!taskToUpdate) return
@@ -27,9 +27,11 @@ export function useKanban({ listOfTask }: Props) {
     clonedTasks[oldStatus].splice(taskToUpdateIndex, 1);
     clonedTasks[newStatus].push(taskToUpdate);
     taskToUpdate.status = newStatus;
+    console.log({ taskToUpdate, taskToUpdateIndex, clonedTasks });
+    
     await changeStatus({ id: taskID, newStatus });
     setTasks(clonedTasks);
   }
 
-  return { tasks, setTasks, updateTaskStatus }
+  return { tasks, setTasks, moveTask }
 }

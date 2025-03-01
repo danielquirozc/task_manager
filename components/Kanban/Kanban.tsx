@@ -1,38 +1,43 @@
 'use client'
-import { tasks } from "@prisma/client";
-import { TaskStatus } from "@/types/taskStatus";
-import TaskList from "./TaskList";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useKanban } from "@/app/hooks/useKanban";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { tags, tasks, taskstatus } from "@prisma/client";
 import { toast } from "sonner";
+import TaskList from "./TaskList";
 
-interface Props {
-  listOfTask: tasks[]
+export type TaskWithTags = tasks & {
+  tagsOnTasks: {
+    tags: tags 
+  }[]
 }
 
-export default function Kanban({ listOfTask }: Props) {
-  const { tasks,  updateTaskStatus } = useKanban({ listOfTask });
-  
-  const onDragEnd = (event: DragEndEvent) => {
+interface Props {
+  taskCollection: TaskWithTags[]
+}
+
+export default function Kanban({ taskCollection }: Props) {
+  const { tasks, moveTask } = useKanban({ taskCollection });
+
+  const onDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
-    if (!active || !over || active.id === over.id) return
+    if (!active || !over || active.data.current?.associatedGroup === over.data.current?.groupName) return
     const taskID = active.id as number;
-    const newStatus = over.id as TaskStatus;
-    const oldStatus = active.data.current?.associatedGroup as TaskStatus;
-    const response = updateTaskStatus({ taskID, newStatus, oldStatus });
+    const newStatus = over.data.current?.groupName as taskstatus;
+    const oldStatus = active.data.current?.associatedGroup as taskstatus;    
+    const response = moveTask({ taskID, newStatus, oldStatus });
     toast.promise(response, {
       loading: 'Updating task status...',
       success: 'Task status updated successfully',
       error: 'Error updating task status'
     })
   }
-  
+
   return (
     <DndContext onDragEnd={onDragEnd}>
       <div className="flex justify-center m-5 *:flex-1 *:h-full items-center h-full w-full flex-row gap-10">
-        <TaskList title={TaskStatus.DO} taskCount={tasks.Do.length} tasks={tasks.Do} />
-        <TaskList title={TaskStatus.PENDING} taskCount={tasks.Pending.length} tasks={tasks.Pending} />
-        <TaskList title={TaskStatus.DONE} taskCount={tasks.Done.length} tasks={tasks.Done} />
+        <TaskList status={taskstatus.Do} title="Todo List" tasks={tasks.Do} />
+        <TaskList status={taskstatus.Pending} title="In Progress" tasks={tasks.Pending} />
+        <TaskList status={taskstatus.Done} title="Done" tasks={tasks.Done} />
       </div>
     </DndContext>
   );

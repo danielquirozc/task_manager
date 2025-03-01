@@ -1,5 +1,4 @@
 'use client'
-import { actionButtonStyle } from "./actionButtonStyle";
 import { logout } from "@/app/actions/logout";
 
 export default function LogoutButton() {
@@ -11,7 +10,7 @@ export default function LogoutButton() {
   return (
     <button  
       onClick={() => handleClick()}
-      className={`text-red-500 hover:border-red-500 ${actionButtonStyle}`}
+      className={`text-red-500 action-btn`}
     >
       Logout
     </button>

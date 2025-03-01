@@ -1,11 +1,11 @@
-import { TaskStatus } from "@/types/taskStatus";
-import { tasks } from "@prisma/client";
+import { TaskWithTags } from "@/components/Kanban/Kanban";
+import { taskstatus } from "@prisma/client";
 
-export function orderByStatus(taskList : tasks[]) {
+export function orderByStatus(taskList : TaskWithTags[]) {
   const ordererTasks = {
-    [TaskStatus.DO]: [],
-    [TaskStatus.PENDING]: [],
-    [TaskStatus.DONE]: [],
+    [taskstatus.Do]: [],
+    [taskstatus.Pending]: [],
+    [taskstatus.Done]: [],
     ...Object.groupBy(taskList, (task) => task.status)
   }
   return ordererTasks

@@ -1,3 +1,4 @@
+"use server"
 import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
 

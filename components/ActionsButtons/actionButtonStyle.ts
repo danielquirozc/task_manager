@@ -1,1 +1,0 @@
-export const actionButtonStyle = "text-center border-gray-300 border-t border-r hover:border-blue-400 hover:border place-content-center w-full h-full text-blue-600"

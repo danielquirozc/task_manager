@@ -13,7 +13,7 @@ export default {
         "geist-mono": ["Geist Mono", "monospace"],
       },
       colors: {
-        "light": "#f2f2f2",
+        "light": "#F6F6F6",
         "dark": "#333",
       }
     },

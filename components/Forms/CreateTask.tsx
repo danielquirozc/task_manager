@@ -5,9 +5,12 @@ import { toast } from "sonner";
 import TagPicker from "./TagPicker";
 import { useState } from "react";
 import { tags } from "@prisma/client";
+import { TaskStatus } from "@/types/taskStatus";
+import SubmitButton from "./SubmitButton";
 
-export default function CreateTask({ groupID }: { 
+export default function CreateTask({ groupID, defaultStatus }: { 
   groupID: number,
+  defaultStatus?: TaskStatus
 }) {
   const [selectedTags, setSelectedTags] = useState<tags[]>([]);
 
@@ -29,6 +32,7 @@ export default function CreateTask({ groupID }: {
       title: data.Title as string, 
       description: data.Description as string, 
       groupID,
+      defaultStatus,
       tags: selectedTags
     });
 
@@ -46,12 +50,7 @@ export default function CreateTask({ groupID }: {
       <Input type="text" name="Title" defaultValue="" />
       <Input type="text" name="Description" defaultValue="" />
       <TagPicker selectedTags={selectedTags} handleTagChange={handleTagChange} />
-      <button
-        className="bg-blue-300 w-full border border-gray-400 font-semibold text-slate-700 py-2 rounded-lg"
-        type="submit"
-      >
-        Create a Task
-      </button>
+      <SubmitButton text="Create a Task" />
     </form>
   );
 }

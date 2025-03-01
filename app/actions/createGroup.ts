@@ -1,9 +1,9 @@
 'use server'
 
+import { getID } from "@/app/actions/getID"
 import { prisma } from "@/lib/db/prisma"
-import { getID } from "@/utils/getID"
 
-export async function createGroup({ title } : {
+export async function createGroup({ title }: {
   title: string
 }) {
   const userID = await getID()

@@ -28,18 +28,19 @@ model tasks {
   title       String        @db.VarChar(35)
   description String        @db.VarChar(255)
   group_id    Int
-  status      String        @db.VarChar(10)
+  status      taskstatus
   tagsOnTasks tagsOnTasks[]
   groups      groups        @relation(fields: [group_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model users {
-  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  username String   @db.VarChar(20)
-  email    String?  @db.VarChar
-  password String
-  groups   groups[]
-  tags     tags[]
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username   String    @unique @db.VarChar(20)
+  email      String?   @db.VarChar
+  password   String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  groups     groups[]
+  tags       tags[]
 }
 
 model tagsOnTasks {
@@ -48,4 +49,10 @@ model tagsOnTasks {
   tag_id  Int
   tags    tags  @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_tags_tag_id_fkey")
   tasks   tasks @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_tags_task_id_fkey")
+}
+
+enum taskstatus {
+  Do
+  Pending
+  Done
 }

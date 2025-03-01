@@ -1,7 +1,7 @@
 "use server"
 
+import { getID } from "@/app/actions/getID"
 import { prisma } from "@/lib/db/prisma"
-import { getID } from "@/utils/getID"
 
 export async function createTag({ title }: {
   title: string

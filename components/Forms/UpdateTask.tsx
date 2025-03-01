@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { tags, tasks } from "@prisma/client";
 import TagPicker from "./TagPicker";
 import { useState } from "react";
+import SubmitButton from "./SubmitButton";
 
 export interface UpdateTaskFormProps extends tasks {
   tags: tags[]
@@ -45,12 +46,7 @@ export default function UpdateTaskForm({ id, title, description, tags }: UpdateT
       <Input type="text" name="Title" defaultValue={title} />
       <Input type="text" name="Description" defaultValue={description} />
       <TagPicker selectedTags={selectedTags} handleTagChange={handleTagChange} />
-      <button
-        className="bg-blue-300 w-full border border-gray-400 font-semibold text-slate-700 py-2 rounded-lg"
-        type="submit"
-      >
-        Update Task
-      </button>
+      <SubmitButton text="Update Task" />
     </form>
   );
 }

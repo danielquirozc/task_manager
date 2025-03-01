@@ -1,5 +1,5 @@
-import Kanban from "@/components/Kanban/Kanban";
 import { getTaskByGroup } from "@/app/actions/getTaskByGroup";
+import Kanban from "@/components/Kanban/Kanban";
 
 export default async function Page({ params }: {
   params: Promise<{
@@ -7,10 +7,17 @@ export default async function Page({ params }: {
   }>
 }) {
   const { groupID } = await params;
-  const fetchedTasks = await getTaskByGroup(groupID);
+  const { tasks, error } = await getTaskByGroup(groupID);
+  
   return (
     <>
-      <Kanban listOfTask={fetchedTasks} />
+      {
+        error || !tasks ? (
+          <p className="text-center text-slate-500 h-full place-content-center text-lg">{error}</p>
+        ) : (
+          <Kanban taskCollection={tasks} />
+        )
+      }
     </>
   );
 }

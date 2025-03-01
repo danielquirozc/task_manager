@@ -1,27 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  @apply border-gray-400
-}
-
-.btn-soft {
-  @apply bg-black w-full border font-semibold text-slate-100 font-geist py-2 rounded-lg
-}
-
-.loading-gradient {
-  background-image: linear-gradient(180deg, transparent, #e8e7e7, transparent);
-  background-size: 50% 200%;
-  animation: shimmer-vertical 1.5s infinite ease-in-out; /* Animación */
-}
-
-@keyframes shimmer-vertical {
-  from {
-    background-position: 0 200%;
+@layer base {
+  * {
+    @apply border-gray-200;
   }
-  to {
-    background-position: 0 -200%;
+
+  .btn-soft {
+    @apply bg-black w-full border font-semibold text-slate-100 py-2 rounded-lg
+  }
+
+  .action-btn {
+    @apply text-center cursor-pointer border-t-2 border-r-2 hover:border-gray-300 border place-content-center w-full h-full text-blue-600
   }
 }
 
+@theme {
+  --do-color: oklch(0.885 0.062 18.334);
+  --do-color-secundary: oklch(0.704 0.191 22.216);
+  --pending-color: oklch(0.924 0.12 95.746);
+  --pending-color-secundary: oklch(0.681 0.162 75.834);
+  --done-color: oklch(0.925 0.084 155.995);
+  --done-color-secundary: oklch(0.432 0.095 166.913);
+}

@@ -1,8 +1,10 @@
+import { PencilLine, SquarePen } from "lucide-react";
 import Link from "next/link";
-import { actionButtonStyle } from "./actionButtonStyle";
 
 export default function UpdateTaskButton({ id }: { id: number }) {
   return (
-    <Link href={`/task/update/${id}`} className={actionButtonStyle}>Update</Link>
+    <Link href={`/task/update/${id}`} className="cursor-pointer">
+      <PencilLine size={20} className="text-black/30" />
+    </Link>
   );
 }

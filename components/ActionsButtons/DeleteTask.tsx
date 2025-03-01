@@ -1,6 +1,6 @@
 'use client'
 import { deleteTask } from "@/app/actions/deleteTask";
-import { actionButtonStyle } from "./actionButtonStyle";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 export default function DeleteTaskButton({ id }: { id: number }) {
@@ -15,6 +15,8 @@ export default function DeleteTaskButton({ id }: { id: number }) {
   };
 
   return (
-    <button onClick={() => handleClick()} className={`text-red-500 hover:border-red-500 ${actionButtonStyle}`}>Delete</button>
+    <button onClick={() => handleClick()} className={`text-black/30 cursor-pointer`}>
+      <Trash2 size={20} />
+    </button>
   );
 }
