@@ -1,5 +1,5 @@
 import { orderByStatus } from "@/utils/orderByStatus";
-import { tasks, taskstatus } from "@prisma/client";
+import { taskstatus } from "@prisma/client";
 import { useState } from "react";
 import { changeStatus } from "../actions/changeStatus";
 import { TaskWithTags } from "@/components/Kanban/Kanban";

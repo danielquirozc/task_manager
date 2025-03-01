@@ -6,7 +6,7 @@ import TagList from "./TagList";
 import UpdateTaskButton from "../ActionsButtons/UpdateTask";
 import DeleteTaskButton from "../ActionsButtons/DeleteTask";
 
-export default function TaskItem({ id, title, status, group_id, description, tagsOnTasks }: TaskWithTags) {
+export default function TaskItem({ id, title, status, description, tagsOnTasks }: TaskWithTags) {
   const { listeners, setNodeRef, transform } = useDraggable({
     id: id,
     data: {

@@ -1,5 +1,5 @@
 import { groups } from "@prisma/client";
-import { ChevronRight, CircleCheck, CircleCheckBig } from "lucide-react";
+import { ChevronRight, CircleCheck } from "lucide-react";
 import Link from "next/link";
 
 interface GroupItemProps {

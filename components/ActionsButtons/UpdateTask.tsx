@@ -1,4 +1,4 @@
-import { PencilLine, SquarePen } from "lucide-react";
+import { PencilLine } from "lucide-react";
 import Link from "next/link";
 
 export default function UpdateTaskButton({ id }: { id: number }) {
